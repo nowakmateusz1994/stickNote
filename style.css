@@ -4,3 +4,56 @@
     box-sizing: border-box;
 }
 
+.board {
+    margin-top: 30px;
+    width: 100%;
+    height: calc(100vh - 30px);
+    background: #0cab4e;
+}
+
+.note {
+    width: 150px;
+    min-height: 150px;
+    position: absolute;
+    top: 100px;
+    left: 100px;
+    padding-top: 30px;
+    box-shadow: 3px 3px 2px 2px black;
+}
+
+.bar {
+    text-align: center;
+    padding-top: 5px;
+    width: 100%;
+    height: 30px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgb(11, 36, 161);
+}
+
+.masage {
+    width: 100%;
+    height: 120px;
+    background: #3054cf;
+}
+
+.addNote {
+    padding-top: 5px;
+    width: 100%;
+    height: 30px;
+    text-align: center;
+    background: #0a8d42;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.addNote input {
+    width: 75%;
+    height: 20px;
+}
+
+button {
+    height: 20px;
+}
