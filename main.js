@@ -1,16 +1,14 @@
 const board = document.querySelector('.board');
-const note = document.querySelector('.note');
-const bar = document.querySelector('.bar');
+const bars = document.getElementsByClassName('bar');
 const addNote = document.querySelector('form');
+const removeBtns = document.getElementsByClassName('remove')
 
 let active = false;
 
 
-let xAxis = 150;
-let yAxis = 150;
+let xAxis;
+let yAxis;
 
-note.style.left = `${xAxis}px`;
-note.style.top = `${yAxis}px`;
 
 let insertBarX;
 let insertBarY;
@@ -25,8 +23,8 @@ const moveNote = (e) => {
     if (active) {
         xAxis = e.clientX - insertBarX;
         yAxis = e.clientY - insertBarY;
-        note.style.left = `${xAxis}px`;
-        note.style.top = `${yAxis}px`;
+        e.target.parentNode.style.left = `${xAxis}px`;
+        e.target.parentNode.style.top = `${yAxis}px`;
     }
 }
 
@@ -44,23 +42,41 @@ const addNodeFunc = (e) => {
         newBar.classList.add('bar');
         const btn = document.createElement('button');
         btn.textContent = 'Delete Note';
+        btn.classList.add('remove');
         const masage = document.createElement('div');
         masage.classList.add('masage');
         masage.textContent = input.value;
 
-        newNote.style.left = `${300}px`;
-        newNote.style.top = `${300}px`;
+        xAxis = Math.random() * (board.offsetWidth - 150);
+        yAxis = Math.random() * (board.offsetHeight - 150);
+        newNote.style.left = `${xAxis}px`;
+        newNote.style.top = `${yAxis}px`;
+
+
 
         newBar.appendChild(btn);
         newNote.appendChild(newBar);
         newNote.appendChild(masage);
-        board.appendChild(note);
+        board.appendChild(newNote);
 
         input.value = '';
+
+        let barArray = [...bars]
+        let removeBtnsArray = [...removeBtns]
+        barArray.forEach(bar => {
+            bar.addEventListener('mousedown', chooseNote);
+            bar.addEventListener('mouseup', leavNote);
+        });
+        removeBtnsArray.forEach(removeBtn => {
+            removeBtn.addEventListener('click', removeNote);
+        });
     }
 }
 
-bar.addEventListener('mousedown', chooseNote);
-note.addEventListener('mousemove', moveNote);
-bar.addEventListener('mouseup', leavNote);
+const removeNote = (e) => {
+    e.target.parentNode.parentNode.remove();
+}
+
+
 addNote.addEventListener('submit', addNodeFunc);
+document.addEventListener('mousemove', moveNote);
