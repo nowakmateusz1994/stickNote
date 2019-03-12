@@ -2,7 +2,7 @@ const board = document.querySelector('.board');
 const bars = document.getElementsByClassName('bar');
 const addNote = document.querySelector('form');
 const removeBtns = document.getElementsByClassName('remove')
-
+let note;
 let active = false;
 
 
@@ -17,19 +17,23 @@ const chooseNote = (e) => {
     active = true;
     insertBarX = e.offsetX;
     insertBarY = e.offsetY;
+    e.target.parentNode.classList.add('move');
+    note = document.querySelector('.move')
 }
 
 const moveNote = (e) => {
     if (active) {
         xAxis = e.clientX - insertBarX;
         yAxis = e.clientY - insertBarY;
-        e.target.parentNode.style.left = `${xAxis}px`;
-        e.target.parentNode.style.top = `${yAxis}px`;
+        note.style.left = `${xAxis}px`;
+        note.style.top = `${yAxis}px`;
     }
 }
 
-const leavNote = () => {
+const leavNote = (e) => {
     active = false;
+    e.target.parentNode.classList.remove('move');
+    note = '';
 }
 
 const addNodeFunc = (e) => {
@@ -67,6 +71,7 @@ const addNodeFunc = (e) => {
             bar.addEventListener('mousedown', chooseNote);
             bar.addEventListener('mouseup', leavNote);
         });
+        document.addEventListener('mousemove', moveNote);
         removeBtnsArray.forEach(removeBtn => {
             removeBtn.addEventListener('click', removeNote);
         });
@@ -79,4 +84,3 @@ const removeNote = (e) => {
 
 
 addNote.addEventListener('submit', addNodeFunc);
-document.addEventListener('mousemove', moveNote);
